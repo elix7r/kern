@@ -1,7 +1,8 @@
 import os
 
+import keras
 import tensorflow as tf
-from tensorflow.keras import datasets, layers, models, Input
+from tensorflow.keras import datasets, layers, Input
 
 # Загрузка и нормализация данных CIFAR-10
 cifar = datasets.cifar10
@@ -11,7 +12,7 @@ cifar = datasets.cifar10
 train_images, test_images = train_images / 255.0, test_images / 255.0
 
 # Создание модели
-model = models.Sequential([
+model = keras.models.Sequential([
     Input(shape=(32, 32, 3)),
     layers.Conv2D(32, (3, 3), activation='relu'),
     layers.MaxPooling2D((2, 2)),

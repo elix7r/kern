@@ -11,8 +11,9 @@ from tensorflow.keras import layers
 ssl._create_default_https_context = ssl._create_unverified_context
 
 # categories = ["comp.graphics", "sci.space", "rec.sport.baseball"]
-categories = ["comp.windows.x", "misc.forsale", "comp.windows.x", "sci.electronics"]  # 4 вариант
-# categories = ["rec.autos", "rec.sport.hockey", "sci.crypt", "sci.med", "talk.religion.misc"]  # 5 вариант
+# categories = ["comp.windows.x", "misc.forsale", "comp.windows.x", "sci.electronics"]  # 4 вариант
+categories = ["rec.autos", "rec.sport.hockey", "sci.crypt", "sci.med", "talk.religion.misc"]  # 5 вариант
+# categories = ["comp.sys.ibm.pc.hardware", "rec.motorcycles", "sci.electronics", "alt.atheism"]  # 14 вариант
 newsgroups_train = fetch_20newsgroups(subset='train', categories=categories)
 newsgroups_test = fetch_20newsgroups(subset='test', categories=categories)
 
@@ -27,28 +28,28 @@ for text in newsgroups_test.data:
 total_words = len(vocab)
 
 
-def get_word_2_index(vocab):
-    word2index = {}
-    for i, word in enumerate(vocab):
-        word2index[word.lower()] = i
-    return word2index
+def get_word_to_index(vocab_):
+    _word_to_index = {}
+    for i, _word in enumerate(vocab_):
+        _word_to_index[_word.lower()] = i
+    return _word_to_index
 
 
-word2index = get_word_2_index(vocab)
+word_to_index = get_word_to_index(vocab)
 
 
-def get_batch(df, i, batch_size):
+def get_batch(df, i, batch_size_):
     batches = []
     results = []
-    texts = df.data[i * batch_size:i * batch_size + batch_size]
-    categories = df.target[i * batch_size:i * batch_size + batch_size]
-    for text in texts:
+    texts = df.data[i * batch_size_:i * batch_size_ + batch_size_]
+    _categories = df.target[i * batch_size_:i * batch_size_ + batch_size_]
+    for _text in texts:
         layer = np.zeros(total_words, dtype=float)
-        for word in text.split(' '):
-            layer[word2index[word.lower()]] += 1
+        for _word in _text.split(' '):
+            layer[word_to_index[_word.lower()]] += 1
         batches.append(layer)
-    for category in categories:
-        y = np.zeros((3), dtype=float)
+    for category in _categories:
+        y = np.zeros(3, dtype=float)
         if category == 0:
             y[0] = 1.
         elif category == 1:
